@@ -3,14 +3,16 @@
 
 typedef struct materia{
     int codigo;
-    char *nome;
+    char *nome_diciplina;
     double mf;
 }MAT;
 
 
 typedef struct aluno{
     int matricula;
-    char *nome_alu;
+    char *email;
+    char *nome;
+    long int telefone;
     MAT *materias[];
     struct aluno *esq;
     struct aluno *dir;
@@ -38,7 +40,13 @@ ALU* busca( ALU* aux, int chave){
     }
 }
 
-MAT* add_materias(int chave){
+MAT* add_materias(int chave){/// uma loucura minha se der certo show se n F
+    MAT* novo = malloc (sizeof(MAT));
+    novo->matricula = chave;
+    char *nome_aluno = aluno;
+    MAT *materias[] = add_materias(chave);
+    novo->esq = NULL;
+    novo->dir = NULL;
     MAT materias[5];
 
     for(i=0; i<5; i++) {
@@ -58,22 +66,24 @@ MAT* add_materias(int chave){
     return MAT materias;
 }
 
-void add(int chave, char *aluno, Mat *materias){
-    ALU* resp = busca(chave, raiz);
-    if(resp == NULL || resp->matricula != chave){
+void add(int chave, char *aluno, char *email, long int tel){ /// passar a matricula do novo aluno, seu nome, email e telefone nessa ordem
+    ALU* resp = busca(chave, raiz); 
+    if(resp == NULL || resp->matricula != chave){ /// achou onde vai botar ele se ele não tiver matricula repetida
         ALU* novo = malloc (sizeof(ALU));
         novo->matricula = chave;
-        char *nome_aluno = aluno;
-        MAT *materias[] = add_materias(chave);
+        novo->email = email;
+        novo->nome = aluno;
+        novo->telefone = tel;
+        novo->materias[] = add_materias(chave);
         novo->esq = NULL;
         novo->dir = NULL;
         
-        if(resp == NULL){ 
+        if(resp == NULL){ /// confere se esta vazio 
             raiz = novo;
         }else{
-            if(x < resp->chave){
+            if(x < resp->chave){/// se a matricula é menor bota a esquerda
                 resp->esq = novo;
-            }else{
+            }else{/// se não é menor é maior bota a direita
                 resp->dir = novo;
             }
         }
@@ -83,7 +93,7 @@ void add(int chave, char *aluno, Mat *materias){
     
 }
 
-ALU* remover(ALU *raiz, int chave) {
+ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno que vai ser removido
     ALU *aux;
     if(raiz == NULL){
         printf("Valor nao encontrado!\n");
@@ -126,6 +136,37 @@ ALU* remover(ALU *raiz, int chave) {
         return raiz;
     }
     
+}
+
+void modificar(ALU *aux, int matricula){/// passar a raiz e a matricula como parametro
+	ALU *AlunoAlterado = busca(aux, marticula); /// pegando no inserido pelo usuario para alteraçao
+	char *nome; /// criando variaveis para leitura e usar na atribuiçao na propriedade do aluno
+	char *email;
+	long int telefone;
+	int op = 1;
+	while(op !=0){ //// criando simples laço para o usuario escolher a acao
+
+		printf("digite 1 para alterar o nome, ou digite 2 para alterar o email, 3 para alterar telefone ou 0 para finalizar o processo");
+		scanf("%d", &op); /// recebendo operaçao
+		if(op ==1){
+			printf("digite o nome: ");
+			scanf("%s", &nome);
+			aluno->nome = nome;//// setando valores q o usuario entrou
+		}
+		else if(op==2){
+			printf("digite o email: ");
+			scanf("%s", &email);
+			aluno->email = email; /// setando valores q o usuario entrou 
+			
+		}
+		else if(op==3){
+			printf("digite o telefone: ");
+			scanf("%ld", &telefone);
+			aluno->telefone = telefone; /// setando valores q o usuario entrou 
+			
+		}
+	}
+
 }
 
 
