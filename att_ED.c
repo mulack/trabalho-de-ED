@@ -104,19 +104,7 @@ ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno qu
             printf("Elemento removido: %d !\n\n", chave);
             return NULL;
         }
-        else if(raiz->esq != NULL){                
-            aux = raiz->esq;
-            free(raiz);
-            printf("Elemento removido: %d !\n\n", chave);
-            return aux;
-        }
-        else if(raiz->dir != NULL){
-            aux = raiz->dir;
-            free(raiz);
-            printf("Elemento removido: %d !\n\n", chave);
-            return aux;
-        }
-        else{
+        else if(raiz->esq != NULL && raiz->dir != NULL){
             aux = raiz->esq;
             while(aux->dir != NULL){
                 aux = aux->dir;
@@ -127,6 +115,19 @@ ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno qu
             raiz->esq = remover(raiz->esq, chave);
             return raiz;
         }
+        else if(raiz->esq != NULL){                
+            aux = raiz->esq;
+            free(raiz);
+            printf("Elemento removido: %d !\n\n", chave);
+            return aux;
+        }
+        else{
+            aux = raiz->dir;
+            free(raiz);
+            printf("Elemento removido: %d !\n\n", chave);
+            return aux;
+        }
+        
     }
     else {
         if(chave < raiz->matricula)
@@ -185,26 +186,72 @@ void buscar_alu(int chave){
 
 void imprimir_arv(ALU *raiz){
     if(raiz){
+        imprimir_arv(raiz->esq);
         printf("Dados do aluno: \n");
         printf("Matricula: %d \n", raiz->matricula);
         printf("Nome: %s \n", raiz->nome);
         printf("Email: %s \n", raiz->email);
         printf("Telefone :%ld \n\n", raiz->telefone);
-        imprimir_arv(raiz->esq);
         imprimir_arv(raiz->dir);
     }
 }
 
-
+void main_de_interacao(){
+    int op = 1;
+    while(op !=0){ ////criando simples laço para o usuario escolher a acao no menu
+    	printf("\n Digite 1 para adicionar um aluno\n Digite 2 para modificar dados do aluno\n Digite 3 para remover um aluno\n Digite 4 para buscar um aluno\n Digite 5 para imprimir todos os alunos\n Digite 0 para finalizar o processo:\n");
+    	scanf("%d", &op); /// recebendo operaçao
+		if(op ==1){
+		    int nmatri;//atribuir variavel para nova matricula
+    		char nalu[50];//atribuir variavel para novo aluno
+    		char nema[30];//atribuir variavel para novo email
+    		long int ntel;//atribuir variavel para novo numero de telefone
+	    	printf("digite a matricula: ");
+	    	scanf("%d", &nmatri);//recolhendo dados do usuario e armazenando nas variaveis
+    		printf("digite o nome do aluno: ");
+    		scanf("%s", nalu);//recolhendo dados do usuario e armazenando nas variaveis
+			printf("digite o email: ");
+			scanf("%s", nema);//recolhendo dados do usuario e armazenando nas variaveis
+    		printf("digite o numero de telefone: ");
+    		scanf("%ld", &ntel);//recolhendo dados do usuario e armazenando nas variaveis
+    		add(nmatri, nalu, nema, ntel);//usando os dados fornecidos pelo usuario para executar a função
+	   	}
+    	else if(op==2){
+	        int modmat;//atribui variavel para o aluno a ser modificado
+    		printf("digite a matricula do aluno: ");
+    		scanf("%d", &modmat);//recolhendo dados do usuario e armazenando na variavel
+    		modificar(raiz, modmat);//usando os dados fornecidos pelo usuario para executar a função
+    	}
+    	else if(op==3){
+		       int remmat;//atribui variavel para o aluno a ser modificado
+    		printf("digite a matricula do aluno: ");
+    		scanf("%d", &remmat);//recolhendo dados do usuario e armazenando na variavel
+    		remover(raiz, remmat);//usando os dados fornecidos pelo usuario para executar a função
+    	}
+    	else if(op==4){
+		    int chave;//atribui variavel para o aluno a ser buscado
+    		printf("digite a chave do aluno: ");
+    		scanf("%d", &chave);//recolhendo dados do usuario e armazenando na variavel
+    		buscar_alu(chave);//usando os dados fornecidos pelo usuario para executar a função
+    	}
+    	else if(op==5){
+	        imprimir_arv(raiz);
+        }
+    } 
+}
 
 int main() {
     add(555555, "pedro", "mfmd@gmail.com", 998877664); 
     add(444444, "joao", "fefe@gmail.com", 344343434);
     add(333333, "caio", "caicai@gmail.com", 355554534);
-    modificar(raiz, 333333);
-    remover(raiz, 444444);
-    imprimir_arv(raiz);
-    buscar_alu(333333);
-    //printf("%s", materias[0].nome_disciplina);
+    //add(324388, "felipe", "feh@gmail.com", 235346677); 
+    //add(945645, "maria", "mari@gmail.com", 235546586);
+    //add(232889, "guilherme", "gui@gmail.com", 124854845);
+    //add(221318, "jessica", "jess@gmail.com", 98663135); 
+    //add(134355, "ana", "ana@gmail.com", 243558831);
+    //add(213854, "julia", "juh@gmail.com", 123155996);   
+    //add(153254, "pedro", "pedro@gmail.com", 523689234);
+    //printf("%s", materias[0].nome_disciplina);*/
+    main_de_interacao();   
     return 0;
 }
