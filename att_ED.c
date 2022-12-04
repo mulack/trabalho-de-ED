@@ -169,6 +169,20 @@ void modificar(ALU *aux, int chave){/// passar a raiz e a matricula como paramet
 	}
 }
 
+void buscar_alu(ALU *aux, int chave){
+    ALU *raiz = busca(aux, chave);
+    if (raiz->matricula == chave){
+        printf("Aluno encontrado, esses são seus dados: \n");
+        printf("Matricula: %d \n", raiz->matricula);
+        printf("Nome: %s \n", raiz->nome);
+        printf("Email: %s \n", raiz->email);
+        printf("Telefone :%ld \n\n", raiz->telefone);
+    }
+    else{
+        printf("aluno não encontrado");
+    }
+}
+
 void imprimir_arv(ALU *raiz){
     if(raiz){
         printf("Dados do aluno: \n");
@@ -183,8 +197,14 @@ void imprimir_arv(ALU *raiz){
 
 
 int main(){
-    add(555555, "pedro", "mfmd@gmail.com", 998877664);  
-    imprimir(raiz);
-    
+    int main() {
+    add(555555, "pedro", "mfmd@gmail.com", 998877664); 
+    add(444444, "joao", "fefe@gmail.com", 344343434);
+    add(333333, "caio", "caicai@gmail.com", 355554534);
+    //modificar(raiz, 555555);
+    remover(raiz, 444444);
+    imprimir_arv(raiz);
+    //buscar_alu(raiz, 333333);
+    //printf("%s", materias[0].nome_disciplina);
     return 0;
 }
