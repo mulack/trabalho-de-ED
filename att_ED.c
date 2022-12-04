@@ -65,7 +65,7 @@ ALU* busca(int x, ALU* aux){
     return MAT materias;
 }*/
 
-void add(int matri, char *aluno, char *email, long int tel){ /// passar a matricula do novo aluno, seu nome, email e telefone nessa ordem
+ALU *add(int matri, char *aluno, char *email, long int tel){ /// passar a matricula do novo aluno, seu nome, email e telefone nessa ordem
     ALU* resp = busca(matri, raiz); 
     if(resp == NULL || resp->matricula != matri){ /// achou onde vai botar ele se ele não tiver matricula repetida
         ALU* novo = malloc (sizeof(ALU));
@@ -137,30 +137,30 @@ ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno qu
     }
 }
 
-void modificar(ALU *aux, int chave){/// passar a raiz e a matricula como parametro
+ALU *modificar(ALU *aux, int chave){/// passar a raiz e a matricula como parametro
 	ALU *AlunoAlterado = busca(chave, aux); /// pegando no inserido pelo usuario para alteraçao
 	if (AlunoAlterado->matricula == chave){
-    	char *nome; /// criando variaveis para leitura e usar na atribuiçao na propriedade do aluno
-	    char *email;
-	    long int telefone;
+    	char *nombre; /// criando variaveis para leitura e usar na atribuiçao na propriedade do aluno
+	    char *emaill;
+	    long int fone;
 	    int op = 1;
     	while(op !=0){ //// criando simples laço para o usuario escolher a acao
     		printf(" Digite 1 para alterar o nome\n Digite 2 para alterar o email\n Digite 3 para alterar o telefone\n Digite 0 para finalizar o processo:\n");
     		scanf("%d", &op); /// recebendo operaçao
     		if(op ==1){
 		    	printf("digite o nome: ");
-		    	scanf("%s", &nome);
-		    	aux->nome = nome;//// setando valores q o usuario entrou
+		    	scanf("%s", nombre);
+		    	AlunoAlterado->nome = nombre;//// setando valores q o usuario entrou
 	    	}
     		else if(op==2){
     			printf("digite o email: ");
-    			scanf("%s", &email);
-    			aux->email = email; /// setando valores q o usuario entrou 
+    			scanf("%s", emaill);
+    			AlunoAlterado->email = emaill; /// setando valores q o usuario entrou 
     		}
     		else if(op==3){
     			printf("digite o telefone: ");
-    			scanf("%ld", &telefone);
-    			aux->telefone = telefone; /// setando valores q o usuario entrou
+    			scanf("%ld", &fone);
+    			AlunoAlterado->telefone = fone; /// setando valores q o usuario entrou
         		}
         	}
 	}
@@ -201,10 +201,10 @@ int main() {
     add(555555, "pedro", "mfmd@gmail.com", 998877664); 
     add(444444, "joao", "fefe@gmail.com", 344343434);
     add(333333, "caio", "caicai@gmail.com", 355554534);
-    //modificar(raiz, 555555);
+    modificar(raiz, 333333);
     remover(raiz, 444444);
     imprimir_arv(raiz);
-    //buscar_alu(raiz, 333333);
+    buscar_alu(333333);
     //printf("%s", materias[0].nome_disciplina);
     return 0;
 }
