@@ -95,25 +95,25 @@ void add(int matri, char *aluno, char *email, long int tel){ /// passar a matric
 ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno que vai ser removido
     ALU *aux;
     if(raiz == NULL){
-        printf("Valor nao encontrado!\n");
+        printf("Valor nao encontrado!\n\n");
         return NULL;
     } 
     else if(raiz->matricula == chave){ 
         if(raiz->esq == NULL && raiz->dir == NULL) {
             free(raiz);
-            printf("Elemento removido: %d !\n", chave);
+            printf("Elemento removido: %d !\n\n", chave);
             return NULL;
         }
         else if(raiz->esq != NULL){                
             aux = raiz->esq;
             free(raiz);
-            printf("Elemento removido: %d !\n", chave);
+            printf("Elemento removido: %d !\n\n", chave);
             return aux;
         }
         else if(raiz->dir != NULL){
             aux = raiz->dir;
             free(raiz);
-            printf("Elemento removido: %d !\n", chave);
+            printf("Elemento removido: %d !\n\n", chave);
             return aux;
         }
         else{
@@ -123,7 +123,7 @@ ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno qu
             }
             raiz->matricula = aux->matricula;
             aux->matricula = chave;
-            printf("Elemento trocado: %d !\n", chave);
+            printf("Elemento trocado: %d !\n\n", chave);
             raiz->esq = remover(raiz->esq, chave);
             return raiz;
         }
@@ -137,45 +137,47 @@ ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno qu
     }
 }
 
-void modificar(ALU *aux, int matricula){/// passar a raiz e a matricula como parametro
-	ALU *AlunoAlterado = busca(aux, marticula); /// pegando no inserido pelo usuario para alteraçao
-	char *nome; /// criando variaveis para leitura e usar na atribuiçao na propriedade do aluno
-	char *email;
-	long int telefone;
-	int op = 1;
-	while(op !=0){ //// criando simples laço para o usuario escolher a acao
-
-		printf("digite 1 para alterar o nome, ou digite 2 para alterar o email, 3 para alterar telefone ou 0 para finalizar o processo");
-		scanf("%d", &op); /// recebendo operaçao
-		if(op ==1){
-			printf("digite o nome: ");
-			scanf("%s", &nome);
-			aluno->nome = nome;//// setando valores q o usuario entrou
-		}
-		else if(op==2){
-			printf("digite o email: ");
-			scanf("%s", &email);
-			aluno->email = email; /// setando valores q o usuario entrou 
-			
-		}
-		else if(op==3){
-			printf("digite o telefone: ");
-			scanf("%ld", &telefone);
-			aluno->telefone = telefone; /// setando valores q o usuario entrou 
-			
-		}
+void modificar(ALU *aux, int chave){/// passar a raiz e a matricula como parametro
+	ALU *AlunoAlterado = busca(chave, aux); /// pegando no inserido pelo usuario para alteraçao
+	if (AlunoAlterado->matricula == chave){
+    	char *nome; /// criando variaveis para leitura e usar na atribuiçao na propriedade do aluno
+	    char *email;
+	    long int telefone;
+	    int op = 1;
+    	while(op !=0){ //// criando simples laço para o usuario escolher a acao
+    		printf(" Digite 1 para alterar o nome\n Digite 2 para alterar o email\n Digite 3 para alterar o telefone\n Digite 0 para finalizar o processo:\n");
+    		scanf("%d", &op); /// recebendo operaçao
+    		if(op ==1){
+		    	printf("digite o nome: ");
+		    	scanf("%s", &nome);
+		    	aux->nome = nome;//// setando valores q o usuario entrou
+	    	}
+    		else if(op==2){
+    			printf("digite o email: ");
+    			scanf("%s", &email);
+    			aux->email = email; /// setando valores q o usuario entrou 
+    		}
+    		else if(op==3){
+    			printf("digite o telefone: ");
+    			scanf("%ld", &telefone);
+    			aux->telefone = telefone; /// setando valores q o usuario entrou
+        		}
+        	}
 	}
-
+	else{
+	    printf("aluno não cadastrado\n");
+	}
 }
 
-void imprimir(ALU *raiz){
+void imprimir_arv(ALU *raiz){
     if(raiz){
-        imprimir(raiz->esq);
+        printf("Dados do aluno: \n");
         printf("Matricula: %d \n", raiz->matricula);
         printf("Nome: %s \n", raiz->nome);
         printf("Email: %s \n", raiz->email);
-        printf("Telefone :%d \n", raiz->telefone);
-        imprimir(raiz->dir);
+        printf("Telefone :%ld \n\n", raiz->telefone);
+        imprimir_arv(raiz->esq);
+        imprimir_arv(raiz->dir);
     }
 }
 
