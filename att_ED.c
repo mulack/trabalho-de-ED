@@ -20,35 +20,24 @@ typedef struct aluno{
 
 ALU* raiz = NULL;
 
-/*ALU* busca( ALU* aux, int chave){
+ALU* busca(int x, ALU* aux){
     if(aux == NULL){
-        return NULL; 
-    }else if(chave == aux->matricula){
-        return aux; 
-    }else if(chave < aux->matricula){ 
+        return NULL; //vazia
+    }else if(x == aux->matricula){
+        return aux; //encontrei :D
+    }else if(x<aux->matricula){ //buscar no lado esq
         if(aux->esq != NULL){
-            return busca(chave, aux->esq);
-        }else{
-            return aux;
+            return busca(x, aux->esq);
+        }else{//esq esta vazia
+            return aux; //pai do elemento que não foi encontrado
         }
-    }else{
+    }else{//buscar no lado dir
         if(aux->dir != NULL){
-            return busca(chave, aux->dir);
-        }else{
-            return aux;
+            return busca(x, aux->dir);
+        }else{//dir esta vazia
+            return aux; //pai do elemento que não foi encontrado
         }
     }
-}*/
-ALU* busca(ALU *aux, int chave){
-    while(aux){
-        if(chave < aux->matricula)
-            aux = aux->esq;
-        else if(chave > aux->matricula)
-            aux = aux->dir;
-        else
-            return aux;
-    }
-    return NULL;
 }
 
 MAT* add_materias(){/// uma loucura minha se der certo show se n F
@@ -77,7 +66,7 @@ MAT* add_materias(){/// uma loucura minha se der certo show se n F
 }
 
 void add(int matri, char *aluno, char *email, long int tel){ /// passar a matricula do novo aluno, seu nome, email e telefone nessa ordem
-    ALU* resp = busca(raiz, matri); 
+    ALU* resp = busca(matri, raiz); 
     if(resp == NULL || resp->matricula != matri){ /// achou onde vai botar ele se ele não tiver matricula repetida
         ALU* novo = malloc (sizeof(ALU));
         novo->matricula = matri;
@@ -90,6 +79,7 @@ void add(int matri, char *aluno, char *email, long int tel){ /// passar a matric
         
         if(resp == NULL){ /// confere se esta vazio 
             raiz = novo;
+            return raiz;
         }else{
             if(matri < resp->matricula){/// se a matricula é menor bota a esquerda
                 resp->esq = novo;
@@ -100,7 +90,6 @@ void add(int matri, char *aluno, char *email, long int tel){ /// passar a matric
     }else{
         printf("Add invalida. Chave duplicada");
     }
-    
 }
 
 ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno que vai ser removido
@@ -109,7 +98,7 @@ ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno qu
         printf("Valor nao encontrado!\n");
         return NULL;
     } 
-    else if(raiz->valor == chave){ 
+    else if(raiz->matricula == chave){ 
         if(raiz->esq == NULL && raiz->dir == NULL) {
             free(raiz);
             printf("Elemento removido: %d !\n", chave);
@@ -129,23 +118,23 @@ ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno qu
         }
         else{
             aux = raiz->esq;
-            while(aux->dir != NULL)
+            while(aux->dir != NULL){
                 aux = aux->dir;
-            raiz->valor = aux->valor;
-            aux->valor = chave;
+            }
+            raiz->matricula = aux->matricula;
+            aux->matricula = chave;
             printf("Elemento trocado: %d !\n", chave);
             raiz->esq = remover(raiz->esq, chave);
             return raiz;
         }
     }
     else {
-        if(chave < raiz->valor)
+        if(chave < raiz->matricula)
             raiz->esq = remover(raiz->esq, chave);
         else
             raiz->dir = remover(raiz->dir, chave);
         return raiz;
     }
-    
 }
 
 void modificar(ALU *aux, int matricula){/// passar a raiz e a matricula como parametro
