@@ -169,17 +169,17 @@ void modificar(ALU *aux, int chave){/// passar a raiz e a matricula como paramet
 	}
 }
 
-void buscar_alu(ALU *aux, int chave){
-    ALU *raiz = busca(aux, chave);
-    if (raiz->matricula == chave){
+void buscar_alu(int chave){
+    ALU *aux = busca(chave, raiz);
+    if (aux->matricula == chave){
         printf("Aluno encontrado, esses são seus dados: \n");
-        printf("Matricula: %d \n", raiz->matricula);
-        printf("Nome: %s \n", raiz->nome);
-        printf("Email: %s \n", raiz->email);
-        printf("Telefone :%ld \n\n", raiz->telefone);
+        printf("Matricula: %d \n", aux->matricula);
+        printf("Nome: %s \n", aux->nome);
+        printf("Email: %s \n", aux->email);
+        printf("Telefone :%ld \n\n", aux->telefone);
     }
     else{
-        printf("aluno não encontrado");
+        printf("aluno não encontrado \n");
     }
 }
 
