@@ -13,7 +13,7 @@ typedef struct aluno{
     char *email;
     char *nome;
     long int telefone;
-    MAT *materias[];
+    //MAT *materias[];
     struct aluno *esq;
     struct aluno *dir;
 }ALU;
@@ -40,7 +40,7 @@ ALU* busca(int x, ALU* aux){
     }
 }
 
-MAT* add_materias(){/// uma loucura minha se der certo show se n F
+/*MAT* add_materias(){/// uma loucura minha se der certo show se n F
     MAT* nova = malloc (sizeof(MAT));
     nova->codigo = chave;
     nova->mf = NULL;
@@ -63,7 +63,7 @@ MAT* add_materias(){/// uma loucura minha se der certo show se n F
         scanf("%f", &materias[i].mf);
     }
     return MAT materias;
-}
+}*/
 
 void add(int matri, char *aluno, char *email, long int tel){ /// passar a matricula do novo aluno, seu nome, email e telefone nessa ordem
     ALU* resp = busca(matri, raiz); 
@@ -196,8 +196,8 @@ void imprimir_arv(ALU *raiz){
 }
 
 
-int main(){
-    int main() {
+
+int main() {
     add(555555, "pedro", "mfmd@gmail.com", 998877664); 
     add(444444, "joao", "fefe@gmail.com", 344343434);
     add(333333, "caio", "caicai@gmail.com", 355554534);
