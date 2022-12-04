@@ -20,7 +20,7 @@ typedef struct aluno{
 
 ALU* raiz = NULL;
 
-ALU* busca( ALU* aux, int chave){
+/*ALU* busca( ALU* aux, int chave){
     if(aux == NULL){
         return NULL; 
     }else if(chave == aux->matricula){
@@ -38,26 +38,36 @@ ALU* busca( ALU* aux, int chave){
             return aux;
         }
     }
+}*/
+ALU* busca(ALU *aux, int chave){
+    while(aux){
+        if(chave < aux->matricula)
+            aux = aux->esq;
+        else if(chave > aux->matricula)
+            aux = aux->dir;
+        else
+            return aux;
+    }
+    return NULL;
 }
 
-MAT* add_materias(int chave){/// uma loucura minha se der certo show se n F
-    MAT* novo = malloc (sizeof(MAT));
-    novo->matricula = chave;
-    char *nome_aluno = aluno;
-    MAT *materias[] = add_materias(chave);
-    novo->esq = NULL;
-    novo->dir = NULL;
+MAT* add_materias(){/// uma loucura minha se der certo show se n F
+    MAT* nova = malloc (sizeof(MAT));
+    nova->codigo = chave;
+    nova->mf = NULL;
+    nova->nome_diciplina = NULL;
+
     MAT materias[5];
 
     for(i=0; i<5; i++) {
-        materias[i].nome = NULL;
+        materias[i].nome_diciplina = NULL;
         materias[i].codigo = 0;
         materias[i].mf = 0.0;
     }
 
     for(i=0; i<5; i++) {
         printf(" Digite nome da materia: ");
-        scanf("%s", &materias[i].nome);
+        scanf("%s", &materias[i].nome_diciplina);
         printf(" Digite o codigo da materia: ");
         scanf("%d", &materias[i].codigo);
         printf(" Digite a media final do aluno nessa materia: ");
@@ -66,22 +76,22 @@ MAT* add_materias(int chave){/// uma loucura minha se der certo show se n F
     return MAT materias;
 }
 
-void add(int chave, char *aluno, char *email, long int tel){ /// passar a matricula do novo aluno, seu nome, email e telefone nessa ordem
-    ALU* resp = busca(chave, raiz); 
-    if(resp == NULL || resp->matricula != chave){ /// achou onde vai botar ele se ele não tiver matricula repetida
+void add(int matri, char *aluno, char *email, long int tel){ /// passar a matricula do novo aluno, seu nome, email e telefone nessa ordem
+    ALU* resp = busca(raiz, matri); 
+    if(resp == NULL || resp->matricula != matri){ /// achou onde vai botar ele se ele não tiver matricula repetida
         ALU* novo = malloc (sizeof(ALU));
-        novo->matricula = chave;
+        novo->matricula = matri;
         novo->email = email;
         novo->nome = aluno;
         novo->telefone = tel;
-        novo->materias[] = add_materias(chave);
+        //novo->materias[] = add_materias();
         novo->esq = NULL;
         novo->dir = NULL;
         
         if(resp == NULL){ /// confere se esta vazio 
             raiz = novo;
         }else{
-            if(x < resp->chave){/// se a matricula é menor bota a esquerda
+            if(matri < resp->matricula){/// se a matricula é menor bota a esquerda
                 resp->esq = novo;
             }else{/// se não é menor é maior bota a direita
                 resp->dir = novo;
@@ -169,8 +179,21 @@ void modificar(ALU *aux, int matricula){/// passar a raiz e a matricula como par
 
 }
 
+void imprimir(ALU *raiz){
+    if(raiz){
+        imprimir(raiz->esq);
+        printf("Matricula: %d \n", raiz->matricula);
+        printf("Nome: %s \n", raiz->nome);
+        printf("Email: %s \n", raiz->email);
+        printf("Telefone :%d \n", raiz->telefone);
+        imprimir(raiz->dir);
+    }
+}
 
 
 int main(){
+    add(555555, "pedro", "mfmd@gmail.com", 998877664);  
+    imprimir(raiz);
+    
     return 0;
 }
