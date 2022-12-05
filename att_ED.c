@@ -26,8 +26,8 @@ void add_materias(ALU* nova);
 ALU *add(int matri, char *aluno, char *email, long int tel);
 ALU* remover(ALU *raiz, int chave);
 void modificar(ALU *aux, int chave);
+void feedback(int chave);
 void buscar_alu(int chave);
-void imprimir_arv(ALU *raiz);
 void main_de_interacao();
 
 
@@ -60,7 +60,7 @@ void add_materias(ALU* nova){
     for(int a = 0; a<4; a++){
         nova->disciplinas[a] = malloc(sizeof(MAT));
     }
-    
+    printf(" Informe as medias finais do %s:\n", nova->nome);
     for(a=0; a < 4; a++){
         nova->disciplinas[a]->nome_disciplina = materi[a];
         nova->disciplinas[a]->codigo = cod[a];
@@ -247,7 +247,7 @@ void main_de_interacao(){
 		       int remmat;//atribui variavel para o aluno a ser modificado
     		printf("digite a matricula do aluno: ");
     		scanf("%d", &remmat);//recolhendo dados do usuario e armazenando na variavel
-    		remover(raiz, remmat);//usando os dados fornecidos pelo usuario para executar a função
+    		raiz = remover(raiz, remmat);//usando os dados fornecidos pelo usuario para executar a função
     	}
     	else if(op==4){
 		    int chave;//atribui variavel para o aluno a ser buscado
@@ -260,7 +260,7 @@ void main_de_interacao(){
 
 int main() {
     add(555555, "pedro", "mfmd@gmail.com", 998877664); 
-    //add(444444, "joao", "fefe@gmail.com", 344343434);
+    add(444444, "joao", "fefe@gmail.com", 344343434);
     /*add(333333, "caio", "caicai@gmail.com", 355554534);
     add(324388, "felipe", "feh@gmail.com", 235346677); 
     add(945645, "maria", "mari@gmail.com", 235546586);
