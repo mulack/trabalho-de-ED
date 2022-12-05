@@ -230,11 +230,31 @@ void buscar_alu(int chave){
     }
 }
 
+void imprimir_arv(ALU *raiz){
+    MAT **disciplinas;
+    if(raiz){
+        printf("_ _ _ _ _ _ _ _ _ _ _ _ _ _\n");
+        printf("Dados do aluno: \n");
+        printf("Matricula: %d \n", raiz->matricula);
+        printf("Nome: %s \n", raiz->nome);
+        printf("Email: %s \n", raiz->email);
+        printf("Telefone :%ld \n\n", raiz->telefone);
+        printf("Telefone :%ld \n", raiz->telefone);
+        for(a = 0; a < 4; a++){
+            printf("\n\tDisciplina: %s", raiz->disciplinas[a]->nome_disciplina);
+            printf("\tCodigo: %d\n", raiz->disciplinas[a]->codigo);
+            printf("\tMedia final do aluno: %0.2lf\n", raiz->disciplinas[a]->mf);
+        }
+        imprimir_arv(raiz->esq);
+        imprimir_arv(raiz->dir);
+    }
+}
+
 void main_de_interacao(){
     int op = 1;
     while(op !=0){ ////criando simples laço para o usuario escolher a acao no menu
         printf("\n __________________________________________ \n");
-    	printf("\n Digite 1 para adicionar um aluno:\n Digite 2 para modificar dados do aluno:\n Digite 3 para remover um aluno:\n Digite 4 para buscar um aluno:\n Digite 0 para finalizar o processo:\n");
+    	printf("\n Digite 1 para adicionar um aluno:\n Digite 2 para modificar dados do aluno:\n Digite 3 para remover um aluno:\n Digite 4 para buscar um aluno:\n Digite 5 para imprimir todos os alunos:\n Digite 0 para finalizar o processo:\n");
     	printf(" Opcao: ");
     	scanf("%d", &op); /// recebendo operaçao
 		if(op ==1){
@@ -270,6 +290,9 @@ void main_de_interacao(){
     		scanf("%d", &chave);//recolhendo dados do usuario e armazenando na variavel
     		buscar_alu(chave);//usando os dados fornecidos pelo usuario para executar a função
     	}
+    	else if(op==5){
+	        imprimir_arv(raiz);
+        }
     } 
 }
 
