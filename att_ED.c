@@ -3,7 +3,7 @@
 
 typedef struct materia{
     int codigo;
-    char *nome_diciplina;
+    char *nome_disciplina;
     double mf;
 }MAT;
 
@@ -13,12 +13,23 @@ typedef struct aluno{
     char *email;
     char *nome;
     long int telefone;
-    //MAT *materias[];
+    MAT **disciplinas;
     struct aluno *esq;
     struct aluno *dir;
 }ALU;
 
+int a = 4;
 ALU* raiz = NULL;
+
+ALU* busca(int x, ALU* aux);
+void add_materias(ALU* nova);
+ALU *add(int matri, char *aluno, char *email, long int tel);
+ALU* remover(ALU *raiz, int chave);
+ALU *modificar(ALU *aux, int chave);
+void buscar_alu(int chave);
+void imprimir_arv(ALU *raiz);
+void main_de_interacao();
+
 
 ALU* busca(int x, ALU* aux){
     if(aux == NULL){
@@ -40,30 +51,24 @@ ALU* busca(int x, ALU* aux){
     }
 }
 
-/*MAT* add_materias(){/// uma loucura minha se der certo show se n F
-    MAT* nova = malloc (sizeof(MAT));
-    nova->codigo = chave;
-    nova->mf = NULL;
-    nova->nome_diciplina = NULL;
-
-    MAT materias[5];
-
-    for(i=0; i<5; i++) {
-        materias[i].nome_diciplina = NULL;
-        materias[i].codigo = 0;
-        materias[i].mf = 0.0;
+void add_materias(ALU* nova){
+    double mef;
+    char* materi[4] = {"matematica", "portugues", "ED", "Lab"};
+    int cod[4] = {456436, 345324, 465789, 234567};
+    
+    nova->disciplinas = malloc(sizeof(MAT*)*a);
+    for(int a = 0; a<4; a++){
+        nova->disciplinas[a] = malloc(sizeof(MAT));
     }
-
-    for(i=0; i<5; i++) {
-        printf(" Digite nome da materia: ");
-        scanf("%s", &materias[i].nome_diciplina);
-        printf(" Digite o codigo da materia: ");
-        scanf("%d", &materias[i].codigo);
-        printf(" Digite a media final do aluno nessa materia: ");
-        scanf("%f", &materias[i].mf);
+    
+    for(a=0; a < 4; a++){
+        nova->disciplinas[a]->nome_disciplina = materi[a];
+        nova->disciplinas[a]->codigo = cod[a];
+        printf(" Digite a media final do %s em %s: ",nova->nome, materi[a]);
+        scanf("%lf", &mef);
+        nova->disciplinas[a]->mf = mef;
     }
-    return MAT materias;
-}*/
+}
 
 ALU *add(int matri, char *aluno, char *email, long int tel){ /// passar a matricula do novo aluno, seu nome, email e telefone nessa ordem
     ALU* resp = busca(matri, raiz); 
@@ -73,7 +78,7 @@ ALU *add(int matri, char *aluno, char *email, long int tel){ /// passar a matric
         novo->email = email;
         novo->nome = aluno;
         novo->telefone = tel;
-        //novo->materias[] = add_materias();
+        add_materias(novo);
         novo->esq = NULL;
         novo->dir = NULL;
         
@@ -87,6 +92,7 @@ ALU *add(int matri, char *aluno, char *email, long int tel){ /// passar a matric
                 resp->dir = novo;
             }
         }
+        return novo;
     }else{
         printf("Add invalida. Chave duplicada");
     }
@@ -172,12 +178,18 @@ ALU *modificar(ALU *aux, int chave){/// passar a raiz e a matricula como paramet
 
 void buscar_alu(int chave){
     ALU *aux = busca(chave, raiz);
+    MAT **disciplinas;
     if (aux->matricula == chave){
         printf("Aluno encontrado, esses são seus dados: \n");
         printf("Matricula: %d \n", aux->matricula);
         printf("Nome: %s \n", aux->nome);
         printf("Email: %s \n", aux->email);
-        printf("Telefone :%ld \n\n", aux->telefone);
+        printf("Telefone :%ld \n", aux->telefone);
+        for(a = 0; a < 4; a++){
+            printf("\n\tDisciplina: %s", raiz->disciplinas[a]->nome_disciplina);
+            printf("\tCodigo: %d\n", raiz->disciplinas[a]->codigo);
+            printf("\tMedia final do aluno: %0.2lf\n", raiz->disciplinas[a]->mf);
+        }
     }
     else{
         printf("aluno não encontrado \n");
@@ -185,13 +197,19 @@ void buscar_alu(int chave){
 }
 
 void imprimir_arv(ALU *raiz){
+    MAT **disciplinas;
     if(raiz){
-        imprimir_arv(raiz->esq);
         printf("Dados do aluno: \n");
         printf("Matricula: %d \n", raiz->matricula);
         printf("Nome: %s \n", raiz->nome);
         printf("Email: %s \n", raiz->email);
-        printf("Telefone :%ld \n\n", raiz->telefone);
+        printf("Telefone :%ld \n", raiz->telefone);
+        for(a = 0; a < 4; a++){
+            printf("\n\tDisciplina: %s", raiz->disciplinas[a]->nome_disciplina);
+            printf("\tCodigo: %d\n", raiz->disciplinas[a]->codigo);
+            printf("\tMedia final do aluno: %0.2lf\n", raiz->disciplinas[a]->mf);
+        }
+        imprimir_arv(raiz->esq);
         imprimir_arv(raiz->dir);
     }
 }
@@ -243,15 +261,14 @@ void main_de_interacao(){
 int main() {
     add(555555, "pedro", "mfmd@gmail.com", 998877664); 
     add(444444, "joao", "fefe@gmail.com", 344343434);
-    add(333333, "caio", "caicai@gmail.com", 355554534);
-    //add(324388, "felipe", "feh@gmail.com", 235346677); 
-    //add(945645, "maria", "mari@gmail.com", 235546586);
-    //add(232889, "guilherme", "gui@gmail.com", 124854845);
-    //add(221318, "jessica", "jess@gmail.com", 98663135); 
-    //add(134355, "ana", "ana@gmail.com", 243558831);
-    //add(213854, "julia", "juh@gmail.com", 123155996);   
-    //add(153254, "pedro", "pedro@gmail.com", 523689234);
-    //printf("%s", materias[0].nome_disciplina);*/
+    /*add(333333, "caio", "caicai@gmail.com", 355554534);
+    add(324388, "felipe", "feh@gmail.com", 235346677); 
+    add(945645, "maria", "mari@gmail.com", 235546586);
+    add(232889, "guilherme", "gui@gmail.com", 124854845);
+    add(221318, "jessica", "jess@gmail.com", 98663135); 
+    add(134355, "ana", "ana@gmail.com", 243558831);
+    add(213854, "julia", "juh@gmail.com", 123155996);   
+    add(153254, "pedro", "pedro@gmail.com", 523689234);*/
     main_de_interacao();   
     return 0;
 }
