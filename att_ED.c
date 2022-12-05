@@ -111,13 +111,28 @@ ALU* remover(ALU *raiz, int chave) { /// passa a raiz, e a matricula do aluno qu
             return NULL;
         }
         else if(raiz->esq != NULL && raiz->dir != NULL){
-            aux = raiz->esq;
+            ALU *aux = raiz->esq;
+            ALU aux2;
+            
+            aux2.matricula = raiz->matricula;
+            aux2.email = raiz->email;
+            aux2.nome = raiz->nome;
+            aux2.telefone = raiz->telefone;
+            aux2.disciplinas = raiz->disciplinas;
             while(aux->dir != NULL){
                 aux = aux->dir;
             }
-            raiz = aux;
-            aux->matricula = chave;
-            printf("Elemento trocado: %d !\n\n", chave);
+            raiz->matricula = aux->matricula;
+            raiz->email = aux->email;
+            raiz->nome = aux->nome;;
+            raiz->telefone = aux->telefone;
+            raiz->disciplinas = aux->disciplinas;
+            
+            aux->matricula = aux2.matricula;
+            aux->email = aux2.email;
+            aux->nome = aux2.nome;
+            aux->telefone = aux2.telefone;
+            aux->disciplinas = aux2.disciplinas;
             raiz->esq = remover(raiz->esq, chave);
             return raiz;
         }
@@ -244,10 +259,10 @@ void main_de_interacao(){
     		modificar(raiz, modmat);//usando os dados fornecidos pelo usuario para executar a função
     	}
     	else if(op==3){
-		       int remmat;//atribui variavel para o aluno a ser modificado
+		    int remmat;//atribui variavel para o aluno a ser modificado
     		printf("digite a matricula do aluno: ");
     		scanf("%d", &remmat);//recolhendo dados do usuario e armazenando na variavel
-    		raiz = remover(raiz, remmat);//usando os dados fornecidos pelo usuario para executar a função
+    		remover(raiz, remmat);//usando os dados fornecidos pelo usuario para executar a função
     	}
     	else if(op==4){
 		    int chave;//atribui variavel para o aluno a ser buscado
@@ -261,9 +276,9 @@ void main_de_interacao(){
 int main() {
     add(555555, "pedro", "mfmd@gmail.com", 998877664); 
     add(444444, "joao", "fefe@gmail.com", 344343434);
+    add(945645, "maria", "mari@gmail.com", 235546586);
     /*add(333333, "caio", "caicai@gmail.com", 355554534);
     add(324388, "felipe", "feh@gmail.com", 235346677); 
-    add(945645, "maria", "mari@gmail.com", 235546586);
     add(232889, "guilherme", "gui@gmail.com", 124854845);
     add(221318, "jessica", "jess@gmail.com", 98663135); 
     add(134355, "ana", "ana@gmail.com", 243558831);
