@@ -176,13 +176,13 @@ void modificar(ALU *aux, int chave){/// passar a raiz e a matricula como paramet
     		scanf("%d", &op); /// recebendo operaçao
     		if(op ==1){
 		    	printf("digite o nome: ");
-		    	scanf("%s", nombre);
+		    	scanf("%49s", nombre);
 		    	AlunoAlterado->nome = nombre;//// setando valores q o usuario entrou
 		    	feedback(chave);
 	    	}
     		else if(op==2){
     			printf("digite o email: ");
-    			scanf("%s", emaill);
+    			scanf("%24s", emaill);
     			AlunoAlterado->email = emaill;
     			feedback(chave);
     		}
